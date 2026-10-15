@@ -18,7 +18,7 @@
 -- Step 3 *Functions*
 --Aggregate Functions COUNT, SUM, AVG, MIN, MAX 
 --String Functions UPPER, LOWER, CONCAT 
---Date Functions NOW, DATE, DATEIFF
+--Date Functions NOW, DATE, DATEIF
 --NULL Handling COALESCE 
 
 -- Step 4 *Joins*
@@ -82,7 +82,7 @@
 /* A database is an organized collection of data that can be searched, 
  * 		updated, and managed efficiently. 
  * In postgres, the default database is 'postgres.' In order to make 
- * 		new databases, you can creature using the query:
+ * 		new databases, you can create using the query:
  * CREATE DATABASE database_name;
  * Then change the connection to the new database.
  */
@@ -144,7 +144,7 @@ CREATE TABLE spotify_charts_unclean (
  	* Delete -> DELETE
  * Notes for some of the statements: 
  	* CREATE is a separate query that creates a table itself, not merely adding a row. 
- 	* UPDATE and DELETE without a WHERE clause affect every row in the tale. 
+ 	* UPDATE and DELETE without a WHERE clause affect every row in the table. 
  */
 
 /* examples of CRUD syntax */
@@ -167,7 +167,7 @@ WHERE streams = 400000000;
  * columns, and other obects. 
  * Examples: 
  	* CREATE: build a new object
- 	* ALTER: modifies an existing obkect
+ 	* ALTER: modifies an existing object
  	* DROP: deletes an object entirely 
  	* TRUNCATE: removes all the rows but keeps the table itself
  */
@@ -192,8 +192,6 @@ DROP TABLE temp_table;
  	* UPDATE
  	* DELETE
  * These are the SQL commands that perform the CRUD operations.
- * These commands DO NOT change the actual data or the data 
- * structure. They only affect the output! No worries of alterning data. 
  */
 
 
@@ -578,7 +576,7 @@ WHERE artist = 'Taylor Swift'; -- Execution Time: 4416.884 ms
 
 CREATE INDEX idx_spotify_region_chart
 	ON spotify_charts_unclean (region, chart); -- indexing based off of region, then chart
-CREATE UNIQUE INDEX idk_customer_email
+CREATE UNIQUE INDEX idx_customer_email
 	ON customers (email); -- enforces uniqueness. returns error message if index cannot be fulfilled. 
 DROP INDEX IF EXISTS index_name
 
@@ -693,7 +691,7 @@ CREATE TABLE demo_0nf (
 	products VARCHAR(200) -- "Notebook, Pen"
 );
 -- you would have to normalize it. Drop the table and separate products.
-DROP TABLE IF EXISTS demo;
+DROP TABLE IF EXISTS demo_0nf;
 CREATE TABLE demo_1NF (
 	order_id INT, 
 	order_date DATE,
@@ -725,7 +723,7 @@ CREATE TABLE demo_2NF_orders (
 CREATE TABLE demo_2NF_order_items(
 	order_id INT,
 	product_id INT,
-	quantity INT,
+	quantity INT
 );
 --These 3 tables complete the 2NF. But, customer details still repeat across orders.
 -- customer_email and customer_city depend on the customer, not the order. 
@@ -1182,10 +1180,10 @@ FROM spotify_charts_unclean;
 
 /* Depending on the task, use whatever is necessary */ 
 
-SELECT REPLACE(title, '&amp', '&' AS html_fixed, --sometimes websites encode & with amp
+SELECT REPLACE(title, '&amp', '&' AS html_fixed), --sometimes websites encode & with amp
 	TRANSLATE(artist, 'áéíóú', 'aeiou') AS accents_removed,
-	REGEX_REPLACE(streams::TEXT, '[^0-9]', '', 'g') AS digits_only, -- '1,000,000' becomes '1000000'
-	REGEX_REPLACE(title, '\(feat\..*?\)', '', 'i') AS feat_removed, --get's rid of featured artists
+	REGEXP_REPLACE(streams::TEXT, '[^0-9]', '', 'g') AS digits_only, -- '1,000,000' becomes '1000000'
+	REGEXP_REPLACE(title, '\(feat\..*?\)', '', 'i') AS feat_removed, --get's rid of featured artists
 	SPLIT_PART(artist, ',', 1) AS first_artist, -- only keeps first name
 	STRING_TO_ARRAY(artist, ', ') AS artist_array --splits artists into list
 FROM spotify_charts_unclean;
@@ -1231,7 +1229,7 @@ FROM spotify_charts_unclean;
 /* Depending on the task, use whatever is necessary */ 
 
 SELECT DISTINCT ON (column_name, ...) * 
-FROM spotify_charts_unclean;
+FROM spotify_charts_unclean
 ORDER BY column_name, ... DESC NULLS LAST; 
 
 --Step 8: Validation and Outliers 
