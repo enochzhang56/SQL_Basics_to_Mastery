@@ -231,30 +231,30 @@ LIMIT 200;
  */ 
 
 /* Example of a fuller syntax for each command (not exhaustive)*/
-SELECT DISTINCT region                    -- DISTINCT removes duplicate rows
-SELECT *                                  -- all columns
-SELECT streams / 1000 AS streams_k        -- expressions and aliases
-SELECT COUNT(*), AVG(streams)             -- aggregates, functions
+SELECT DISTINCT region -- DISTINCT removes duplicate rows
+SELECT * -- all columns
+SELECT streams / 1000 AS streams_k -- expressions and aliases
+SELECT COUNT(*), AVG(streams) -- aggregates, functions
 
-FROM spotify_charts_unclean AS s          -- table alias
-FROM a JOIN b ON a.id = b.id              -- joins (Step 4)
-FROM (SELECT ...) AS sub                  -- subquery in FROM (Step 5)
+FROM spotify_charts_unclean AS s -- table alias
+FROM a JOIN b ON a.id = b.id -- joins (will be covered in Step 4)
+FROM (SELECT ...) AS sub -- subquery in FROM (will be covered in Step 5)
 
-WHERE rank = 1                            -- comparison: = <> < > <= >=
-WHERE rank = 1 AND region = 'us'          -- AND, OR, NOT
-WHERE rank IN (1, 2, 3)                   -- match a list
-WHERE rank BETWEEN 1 AND 10               -- inclusive range
-WHERE title LIKE 'Love%'                  -- pattern; ILIKE ignores case
-WHERE streams IS NOT NULL                 -- NULL checks
+WHERE rank = 1 -- comparison: = <> < > <= >=
+WHERE rank = 1 AND region = 'us' -- AND, OR, NOT
+WHERE rank IN (1, 2, 3) -- match a list
+WHERE rank BETWEEN 1 AND 10 -- inclusive range
+WHERE title LIKE 'Love%' -- pattern; ILIKE ignores case
+WHERE streams IS NOT NULL -- NULL checks
 
-GROUP BY region, chart                    -- one output row per group
+GROUP BY region, chart -- one output row per group
 
-HAVING COUNT(*) > 100                     -- filters groups, after aggregation
+HAVING COUNT(*) > 100 -- filters groups, after aggregation
 
-ORDER BY streams DESC, title ASC          -- multiple sort keys
-ORDER BY streams DESC NULLS LAST          -- control where NULLs land
+ORDER BY streams DESC, title ASC -- multiple sort keys
+ORDER BY streams DESC NULLS LAST -- control where NULLs land
 
-LIMIT 10 OFFSET 20                        -- skip 20 rows, return the next 10
+LIMIT 10 OFFSET 20 -- skip 20 rows, return the next 10
 
 
 /* Step 3 Functions */
