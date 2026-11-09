@@ -9,7 +9,7 @@ This repo is both a learning guide for new SQL users and a record of my own prof
 - **Data integrity:** constraints, normalization to 3NF, and transactions with rollbacks
 - **Analytical SQL:** window functions, recursive CTEs, `ROLLUP`, percentiles
 
-**Interview prep included:** practice problems on the Spotify dataset, organized by step and difficulty, each with a full answer key and explanation.
+**Interview prep included:** practice problems on the Spotify dataset, organized by step and difficulty, each with a full answer key and explanation. There is also a Interview_Prep folder with daily practice problems (sets of 5) with answers.
 
 
 ## The Roadmap
